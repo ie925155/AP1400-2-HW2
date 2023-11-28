@@ -1,1 +1,27 @@
 #include "client.h"
+
+Client::Client(std::string id, const Server& server) : server(&server), id(id) {}
+
+std::string Client::get_id() {
+    return id;
+}
+
+std::string Client::get_publickey() {
+    return "";
+}
+
+double Client::get_wallet() {
+    return 0.0;
+}
+
+std::string Client::sign(std::string txt) {
+    return "";
+}
+
+bool Client::transfer_money(std::string receiver, double value) {
+    return false;
+}
+
+size_t Client::generate_nonce() {
+    return 0;
+}
