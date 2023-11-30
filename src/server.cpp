@@ -1,12 +1,34 @@
+
+#include <random>
+
 #include "server.h"
 
 Server::Server() {}
 
 std::shared_ptr<Client> Server::add_client(std::string id) {
-    return nullptr;
+
+    for (auto& client : clients) {
+        if (get_client(id) != nullptr) {
+            std::default_random_engine generator;
+            std::uniform_int_distribution<int> distribution(0, 9);
+            std::string tail = "";
+            for (int i=0; i<4; i++) {
+                tail+=std::to_string(distribution(generator));
+            }
+            id += tail;
+        }
+    }
+    auto client = std::make_shared<Client>(id, *this);
+    clients[client] = 5.0;
+    return client;
 }
 
 std::shared_ptr<Client> Server::get_client(std::string id) {
+    for (auto& client : clients) {
+        if (client.first->get_id() == id) {
+            return client.first;
+        }
+    }
     return nullptr;
 }
 
