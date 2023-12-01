@@ -1,9 +1,12 @@
 #include "client.h"
 
-Client::Client(std::string id, const Server& server) : server(&server), id(id) {}
+Client::Client(std::string id, const Server& server) 
+    : server(&server), id(id) {
+
+}
 
 std::string Client::get_id() {
-    return id;
+    return this->id;
 }
 
 std::string Client::get_publickey() {
@@ -11,7 +14,7 @@ std::string Client::get_publickey() {
 }
 
 double Client::get_wallet() {
-    return 0.0;
+    return server->get_wallet(id);
 }
 
 std::string Client::sign(std::string txt) {

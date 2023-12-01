@@ -19,11 +19,11 @@ std::shared_ptr<Client> Server::add_client(std::string id) {
         }
     }
     auto client = std::make_shared<Client>(id, *this);
-    clients[client] = 5.0;
+    clients[client] = 5;
     return client;
 }
 
-std::shared_ptr<Client> Server::get_client(std::string id) {
+std::shared_ptr<Client> Server::get_client(std::string id) const {
     for (auto& client : clients) {
         if (client.first->get_id() == id) {
             return client.first;
@@ -32,7 +32,12 @@ std::shared_ptr<Client> Server::get_client(std::string id) {
     return nullptr;
 }
 
-double Server::get_wallet(std::string id) {
+double Server::get_wallet(std::string id) const {
+    for (auto& client : clients) {
+        if (client.first->get_id() == id) {
+            return client.second;
+        }
+    }
     return 0.0;
 }
 
