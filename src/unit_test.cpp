@@ -33,7 +33,6 @@ TEST(HW1Test, TEST4) {
     EXPECT_NE(bryan2->get_id(), bryan3->get_id());
 }
 
-/*
 TEST(HW1Test, TEST5) {
     Server server{};
     auto bryan{server.add_client("bryan")};
@@ -48,6 +47,7 @@ TEST(HW1Test, TEST6) {
     EXPECT_TRUE(bryan->get_publickey() != clint->get_publickey());
 }
 
+/*
 TEST(HW1Test, TEST7) {
     Server server{};
     auto bryan{server.add_client("bryan")};

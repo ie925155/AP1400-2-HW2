@@ -1,8 +1,9 @@
+#include "crypto.h"
 #include "client.h"
 
 Client::Client(std::string id, const Server& server) 
     : server(&server), id(id) {
-
+    crypto::generate_key(public_key, private_key);
 }
 
 std::string Client::get_id() {
@@ -10,7 +11,7 @@ std::string Client::get_id() {
 }
 
 std::string Client::get_publickey() {
-    return "";
+    return this->public_key;
 }
 
 double Client::get_wallet() {
