@@ -22,6 +22,9 @@ public:
 	size_t mine();
 private:
 	std::map<std::shared_ptr<Client>, double> clients;
+
+    friend void show_wallets(const Server& server);
 };
+
 
 #endif //SERVER_H

@@ -47,7 +47,6 @@ TEST(HW1Test, TEST6) {
     EXPECT_TRUE(bryan->get_publickey() != clint->get_publickey());
 }
 
-/*
 TEST(HW1Test, TEST7) {
     Server server{};
     auto bryan{server.add_client("bryan")};
@@ -64,6 +63,7 @@ TEST(HW1Test, TEST8) {
     show_wallets(server);
 }
 
+/*
 TEST(HW1Test, TEST9) {
     Server server{};
     auto bryan{server.add_client("bryan")};
