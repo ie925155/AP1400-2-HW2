@@ -3,6 +3,7 @@
 #include "gmock/gmock.h"
 #include "server.h"
 #include "client.h"
+#include "crypto.h"
 
 TEST(HW1Test, TEST1) {
     Server server{};
@@ -63,7 +64,6 @@ TEST(HW1Test, TEST8) {
     show_wallets(server);
 }
 
-/*
 TEST(HW1Test, TEST9) {
     Server server{};
     auto bryan{server.add_client("bryan")};
@@ -83,6 +83,7 @@ TEST(HW1Test, TEST10) {
     EXPECT_DOUBLE_EQ(value, 0.5);
 }
 
+/*
 TEST(HW1Test, TEST11) {
     std::string sender{}, receiver{};
     double value;

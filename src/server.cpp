@@ -2,6 +2,7 @@
 #include <random>
 
 #include "server.h"
+#include <regex>
 
 Server::Server() {}
 
@@ -41,8 +42,18 @@ double Server::get_wallet(std::string id) const {
     return 0.0;
 }
 
-bool Server::parse_trx(std::string trx, std::string sender, std::string receiver, double value) {
-    return false;
+bool Server::parse_trx(std::string trx, std::string& sender, std::string& receiver, double& value) {
+	std::regex pattern(R"(([a-zA-Z]+)-([a-zA-Z]+)-([\d.]+))");
+	std::smatch results;
+	if (std::regex_match(trx, results, pattern)) {
+		sender = results[1];
+		receiver = results[2];
+		value = std::stod(results[3]);
+		return true;
+	} else {
+		throw std::runtime_error("trx doesn't match format");
+	}
+	return false;
 }
 
 bool Server::add_pending_trx(std::string trx, std::string signature) {
