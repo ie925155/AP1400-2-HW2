@@ -83,7 +83,6 @@ TEST(HW1Test, TEST10) {
     EXPECT_DOUBLE_EQ(value, 0.5);
 }
 
-/*
 TEST(HW1Test, TEST11) {
     std::string sender{}, receiver{};
     double value;
@@ -98,6 +97,7 @@ TEST(HW1Test, TEST12) {
     EXPECT_FALSE(valid);
 }
 
+/*
 TEST(HW1Test, TEST13) {
     Server server{};
     auto bryan{server.add_client("bryan")};

@@ -1,8 +1,11 @@
 
 #include <random>
+#include <regex>
 
 #include "server.h"
-#include <regex>
+#include "crypto.h"
+
+std::vector<std::string> pending_trxs;
 
 Server::Server() {}
 
@@ -43,7 +46,7 @@ double Server::get_wallet(std::string id) const {
 }
 
 bool Server::parse_trx(std::string trx, std::string& sender, std::string& receiver, double& value) {
-	std::regex pattern(R"(([a-zA-Z]+)-([a-zA-Z]+)-([\d.]+))");
+	std::regex pattern("(\\w+)-(\\w+)-(\\d+\\.\\d+)");
 	std::smatch results;
 	if (std::regex_match(trx, results, pattern)) {
 		sender = results[1];
@@ -56,8 +59,22 @@ bool Server::parse_trx(std::string trx, std::string& sender, std::string& receiv
 	return false;
 }
 
-bool Server::add_pending_trx(std::string trx, std::string signature) {
-    return false;
+bool Server::add_pending_trx(std::string trx, std::string signature) const {
+    std::string sender{}, receiver{};
+    double value;
+    if(!parse_trx(trx, sender, receiver, value));
+        return false;
+
+    auto psender = get_client(sender);
+    auto preceiver = get_client(receiver);
+    if (preceiver == nullptr)
+        return false;
+    if (clients.at(psender) < value)
+        return false;
+    if(!crypto::verifySignature(psender->get_publickey(), trx, signature))
+        return false;
+    pending_trxs.push_back(trx);
+    return true;
 }
 
 size_t Server::mine() {
