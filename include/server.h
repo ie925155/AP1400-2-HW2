@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <memory>
+#include <vector>
 
 #include <client.h>
 
@@ -26,5 +27,6 @@ private:
     friend void show_wallets(const Server& server);
 };
 
+extern std::vector<std::string> pending_trxs;
 
 #endif //SERVER_H

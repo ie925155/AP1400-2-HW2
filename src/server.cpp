@@ -62,8 +62,9 @@ bool Server::parse_trx(std::string trx, std::string& sender, std::string& receiv
 bool Server::add_pending_trx(std::string trx, std::string signature) const {
     std::string sender{}, receiver{};
     double value;
-    if(!parse_trx(trx, sender, receiver, value));
+    if(!parse_trx(trx, sender, receiver, value)) {
         return false;
+    }
 
     auto psender = get_client(sender);
     auto preceiver = get_client(receiver);
