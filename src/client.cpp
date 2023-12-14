@@ -1,6 +1,8 @@
 #include "crypto.h"
 #include "client.h"
 
+#include <random>
+
 Client::Client(std::string id, const Server& server) 
     : server(&server), id(id) {
     crypto::generate_key(public_key, private_key);
@@ -28,5 +30,7 @@ bool Client::transfer_money(std::string receiver, double value) const {
 }
 
 size_t Client::generate_nonce() {
-    return 0;
+    static std::default_random_engine e;
+    static std::uniform_int_distribution u(0, INT_MAX);
+    return u(e);
 }

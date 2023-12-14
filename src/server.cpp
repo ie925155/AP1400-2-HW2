@@ -79,7 +79,32 @@ bool Server::add_pending_trx(std::string trx, std::string signature) const {
 }
 
 size_t Server::mine() {
-    return 0;
+    std::string mempool{};
+    for (auto& trx : pending_trxs) {
+        mempool += trx;
+    }
+    size_t nonce = 0;
+    bool isMined = false;
+    while (!isMined) {
+        for (auto& [client, balance] : clients) {
+            nonce = client->generate_nonce();
+            const std::string hash = crypto::sha256(mempool + std::to_string(nonce));
+            if (hash.substr(0,10).find("0000") != std::string::npos) {
+                balance += 6.25;
+                isMined = true;
+                for (auto& trx : pending_trxs) {
+                    std::string sender{}, receiver{};
+                    double value;
+                    parse_trx(trx, sender, receiver, value);
+                    clients[get_client(sender)] -= value;
+                    clients[get_client(receiver)] += value;
+                }
+                pending_trxs.clear();
+                break;
+            }
+        }
+    }
+    return nonce;
 }
 
 void  show_wallets(const  Server& server)
